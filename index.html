@@ -1,276 +1,444 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Requirements Selection · Driver &amp; Mobility Platform</title>
+<title>Driver & Mobility Platform — Requirements Selection</title>
 <style>
-:root{--bg:#f6f7fb;--card:#fff;--ink:#14182b;--mut:#626a85;--line:#e1e4ef;--pri:#3d5afe;--yes:#16a34a;--later:#d97706;--no:#6b7280;--tagbg:#eef1ff}
-@media(prefers-color-scheme:dark){:root{--bg:#0f1220;--card:#181c30;--ink:#eceefb;--mut:#9aa2c4;--line:#2a2f4a;--pri:#7c8dff;--tagbg:#232846}}
+:root{--bg:#f6f7fb;--card:#fff;--ink:#1b1f2a;--mute:#667085;--line:#e4e7ee;--acc:#3b4fd8;--acc2:#eef0ff;--yes:#12805c;--yesbg:#e3f6ee;--later:#a15c00;--laterbg:#fff3dc;--no:#b42318;--nobg:#fde8e6;--r:12px}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
-.wrap{max-width:900px;margin:0 auto;padding:0 16px 80px}
-.top{position:sticky;top:0;z-index:10;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 16px}
-.top .in{max-width:900px;margin:auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.bar{flex:1;min-width:120px;height:8px;background:var(--line);border-radius:9px;overflow:hidden}
-.bar i{display:block;height:100%;width:0;background:var(--pri);transition:width .2s}
-.top b{font-size:14px;white-space:nowrap}
-h1{font-size:clamp(24px,5vw,34px);margin:28px 0 8px}
-h2{font-size:20px;margin:32px 0 4px}
-.sub{color:var(--mut);font-size:14px;margin:0 0 12px}
-.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin:18px 0}
-.steps div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;font-size:14px}
-.steps strong{display:block;margin-bottom:2px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:10px 0}
-.client{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
-label.f{display:block;font-size:13px;color:var(--mut)}
-input[type=text],input[type=email],input[type=search],textarea,select{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 10px;margin-top:3px}
-textarea{min-height:64px;resize:vertical}
-.row{display:flex;flex-direction:column;gap:8px}
-.ft{display:flex;gap:8px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
-.ft h3{margin:0;font-size:16px}
-.ft p{margin:2px 0 0;color:var(--mut);font-size:14px}
-.tag{display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:99px;background:var(--tagbg);color:var(--pri);margin-left:6px;vertical-align:middle}
-.seg{display:flex;gap:6px;flex-wrap:wrap}
-.seg button,.btn{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:9px;padding:7px 14px;cursor:pointer;min-height:38px}
-.seg button[aria-pressed=true].yes{background:var(--yes);border-color:var(--yes);color:#fff}
-.seg button[aria-pressed=true].later{background:var(--later);border-color:var(--later);color:#fff}
-.seg button[aria-pressed=true].no{background:var(--no);border-color:var(--no);color:#fff}
-.note-btn{border:0;background:none;color:var(--pri);cursor:pointer;font:inherit;font-size:13px;padding:4px 0;text-align:left}
-.note{display:none}.note.open{display:block}
-.btn.pri{background:var(--pri);border-color:var(--pri);color:#fff}
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
-pre{white-space:pre-wrap;word-break:break-word;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;font-size:13px;max-height:420px;overflow:auto}
-.chk{display:flex;gap:8px;align-items:center;font-size:14px;margin:10px 0}
-.hide{display:none!important}
-.toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#14182b;color:#fff;padding:9px 16px;border-radius:9px;font-size:14px;opacity:0;pointer-events:none;transition:.2s}
+body{margin:0;font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+header.top{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);padding:10px 16px}
+.top-in{max-width:1100px;margin:auto;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.top h1{font-size:16px;margin:0;flex:1 1 220px}
+.pbar{flex:2 1 260px;min-width:200px}
+.pbar .t{font-size:12px;color:var(--mute);display:flex;justify-content:space-between}
+.track{height:8px;background:var(--line);border-radius:8px;overflow:hidden;margin-top:3px}
+.fill{height:100%;background:var(--acc);width:0;transition:width .25s}
+.btn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 12px;font:inherit;font-size:13px;cursor:pointer;color:var(--ink)}
+.btn:hover{background:var(--acc2)}
+.btn.pri{background:var(--acc);color:#fff;border-color:var(--acc)}
+.btn.pri:hover{background:#2f40b8}
+.btn.sm{padding:4px 9px;font-size:12px}
+main{max-width:1100px;margin:auto;padding:16px}
+.hero{background:linear-gradient(135deg,#3b4fd8,#6a3bd8);color:#fff;border-radius:16px;padding:24px;margin-bottom:16px}
+.hero h2{margin:0 0 6px;font-size:22px}
+.hero p{margin:4px 0;opacity:.95}
+.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:14px}
+.how div{background:rgba(255,255,255,.14);border-radius:10px;padding:10px 12px;font-size:13px}
+.legend{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0;font-size:12px}
+.pill{display:inline-block;padding:1px 8px;border-radius:20px;font-size:11px;font-weight:600}
+.p-y{background:var(--yesbg);color:var(--yes)}.p-l{background:var(--laterbg);color:var(--later)}.p-n{background:var(--nobg);color:var(--no)}
+.tag{font-size:10px;font-weight:700;padding:1px 6px;border-radius:6px;margin-left:6px;vertical-align:middle;background:#eef0f4;color:#556}
+.tag.v1{background:#e5ecff;color:#2740b8}.tag.v2{background:#f1e6ff;color:#6b2fb3}.tag.o{background:#fff3dc;color:#a15c00}
+nav.toc{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 14px}
+nav.toc a{font-size:12px;text-decoration:none;color:var(--acc);background:var(--acc2);padding:4px 10px;border-radius:20px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 14px;font-size:13px}
+.filters input[type=search]{padding:7px 10px;border:1px solid var(--line);border-radius:8px;font:inherit;min-width:200px}
+details.sec{background:var(--card);border:1px solid var(--line);border-radius:var(--r);margin-bottom:12px}
+details.sec>summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+details.sec>summary::-webkit-details-marker{display:none}
+details.sec>summary::before{content:"▸";color:var(--mute);transition:transform .15s}
+details.sec[open]>summary::before{transform:rotate(90deg)}
+.sec-title{font-weight:650;flex:1 1 200px}
+.sec-title small{display:block;font-weight:400;color:var(--mute);font-size:12px}
+.cnt{font-size:12px;color:var(--mute);display:flex;gap:6px;align-items:center}
+.sec-body{padding:0 16px 16px;border-top:1px solid var(--line)}
+.bulk{display:flex;gap:6px;flex-wrap:wrap;padding:10px 0}
+.row{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;padding:8px 0;border-bottom:1px dashed var(--line)}
+.row:last-of-type{border-bottom:0}
+.row.hide{display:none}
+.row .nm{min-width:0}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.seg button{border:0;background:#fff;padding:6px 12px;font:inherit;font-size:13px;cursor:pointer;color:var(--mute);border-right:1px solid var(--line)}
+.seg button:last-child{border-right:0}
+.seg button.on[data-v=y]{background:var(--yes);color:#fff}
+.seg button.on[data-v=l]{background:var(--later);color:#fff}
+.seg button.on[data-v=n]{background:var(--no);color:#fff}
+.seg.two button.on[data-v=a]{background:var(--yes);color:#fff}
+.seg.two button.on[data-v=d]{background:var(--later);color:#fff}
+.seg.two button.on[data-v=x]{background:var(--mute);color:#fff}
+.nbtn{border:0;background:none;color:var(--acc);cursor:pointer;font-size:12px;padding:4px 6px}
+.nbtn.has{font-weight:700}
+.row textarea,.notes textarea,.fld textarea{width:100%;grid-column:1/-1;padding:8px;border:1px solid var(--line);border-radius:8px;font:inherit;font-size:13px;min-height:54px;resize:vertical}
+.row textarea[hidden]{display:none}
+.secnote{margin-top:10px}
+.secnote label{font-size:12px;color:var(--mute)}
+.secnote textarea{width:100%;padding:8px;border:1px solid var(--line);border-radius:8px;font:inherit;font-size:13px;min-height:50px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;padding-top:12px}
+.fld label{display:block;font-size:13px;font-weight:600;margin-bottom:3px}
+.fld .h{font-size:12px;color:var(--mute);font-weight:400}
+.fld input,.fld select{width:100%;padding:8px;border:1px solid var(--line);border-radius:8px;font:inherit;font-size:14px;background:#fff}
+.fld.wide{grid-column:1/-1}
+.fld textarea{min-height:60px}
+table.ct{width:100%;border-collapse:collapse;font-size:13px}
+table.ct th{text-align:left;font-size:12px;color:var(--mute);padding:6px;border-bottom:1px solid var(--line)}
+table.ct td{padding:8px 6px;border-bottom:1px dashed var(--line);vertical-align:top}
+.costrow{border-bottom:1px dashed var(--line);padding:10px 0}
+.costrow .hd{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;align-items:flex-start}
+.costrow .t{font-weight:600}
+.costrow .m{font-size:12px;color:var(--mute);margin-top:2px}
+.badge{font-size:11px;padding:1px 7px;border-radius:6px;background:#eef0f4;color:#445;margin-right:4px}
+.badge.c{background:#e5ecff;color:#2740b8}.badge.d{background:#f1e6ff;color:#6b2fb3}.badge.u{background:#fff3dc;color:#a15c00}
+.callout{background:#fff8e6;border:1px solid #f3dca0;border-radius:10px;padding:10px 12px;font-size:13px;margin:10px 0}
+.sumgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0}
+.stat{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.stat b{display:block;font-size:22px}
+.stat span{font-size:12px;color:var(--mute)}
+#reportBox{width:100%;min-height:340px;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace;padding:10px;border:1px solid var(--line);border-radius:8px;background:#fbfbfd}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#1b1f2a;color:#fff;padding:9px 16px;border-radius:8px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:50}
 .toast.show{opacity:1}
-.legend{font-size:13px;color:var(--mut)}
+footer{max-width:1100px;margin:10px auto 40px;padding:0 16px;color:var(--mute);font-size:12px}
+@media(max-width:640px){.row{grid-template-columns:1fr auto}.row .seg{grid-column:1/-1}.row .nbtn{justify-self:end;grid-row:1;grid-column:2}}
+@media print{header.top,.bulk,.filters,nav.toc,.btn,.nbtn,.hero .how{display:none!important}details.sec:not([open])>*:not(summary){display:block}body{background:#fff}}
 </style>
 </head>
 <body>
-<div class="top"><div class="in"><b id="pc">0 of 0 answered · 0%</b><div class="bar"><i id="pb"></i></div></div></div>
-<div class="wrap">
-<h1>Let's define exactly what you need</h1>
-<p>Go through each section and choose <b>Yes</b>, <b>Later</b> or <b>No</b> for every feature. Add a note wherever you want something changed or have a special requirement. At the end, generate a report and send it back to us — we will use it to prepare your quotation.</p>
-<div class="steps">
-<div><strong>1. Choose</strong>Yes = needed at launch. Later = needed in a later phase. No = not needed.</div>
-<div><strong>2. Add notes</strong>Click “Note” on any line for special requirements or questions.</div>
-<div><strong>3. Answer questions</strong>Business questions, external costs and project terms are at the bottom.</div>
-<div><strong>4. Generate report</strong>Copy or download the report and send it to us.</div>
-</div>
-<p class="legend">Tags: <b>V1</b> = our suggested launch scope · <b>V2</b> = suggested for a later phase · <b>Optional</b> = extra, discuss. Your progress is saved in this browser automatically (if the browser allows it).</p>
-<label class="chk"><input type="checkbox" id="unans"> Show unanswered only</label>
+<header class="top">
+ <div class="top-in">
+  <h1>Requirements Selection <span style="color:var(--mute);font-weight:400">· Driver &amp; Mobility Platform</span></h1>
+  <div class="pbar"><div class="t"><span id="ptxt">0 of 0 answered</span><span id="ppct">0%</span></div><div class="track"><div class="fill" id="pfill"></div></div></div>
+  <button class="btn pri" onclick="gotoReport()">Review &amp; generate report</button>
+ </div>
+</header>
 
-<div class="card"><b>About you</b>
-<div class="client" style="margin-top:8px">
-<label class="f">Your name<input type="text" id="c_name" autocomplete="name"></label>
-<label class="f">Company<input type="text" id="c_company" autocomplete="organization"></label>
-<label class="f">Email<input type="email" id="c_email" autocomplete="email"></label>
-<label class="f">Phone / WhatsApp<input type="text" id="c_phone" autocomplete="tel"></label>
-</div></div>
+<main>
+ <div class="hero">
+  <h2>Let's define exactly what you need</h2>
+  <p>Go through each section and choose <b>Yes</b>, <b>Later</b> or <b>No</b> for every feature. Add a note wherever you want something changed or have a special requirement. At the end, generate a report and send it back to us — we will use it to prepare your quotation.</p>
+  <div class="how">
+   <div><b>1. Choose</b><br>Yes = needed at launch. Later = needed in a later phase. No = not needed.</div>
+   <div><b>2. Add notes</b><br>Click “Note” on any line for special requirements or questions.</div>
+   <div><b>3. Answer questions</b><br>Business questions, external costs and project terms are at the bottom.</div>
+   <div><b>4. Generate report</b><br>Copy or download the report and send it to us.</div>
+  </div>
+  <div class="legend">
+   <span class="pill p-y" style="background:#fff">Yes — include in launch version</span>
+   <span class="pill p-l" style="background:#fff">Later — plan for a later phase</span>
+   <span class="pill p-n" style="background:#fff">No — not required</span>
+  </div>
+  <p style="font-size:12px;margin-top:10px;opacity:.85">Tags: <b>V1</b> = our suggested launch scope · <b>V2</b> = suggested for a later phase · <b>Optional</b> = extra, discuss. Your progress is saved in this browser automatically (if the browser allows it).</p>
+ </div>
 
-<div id="sections"></div>
-<div id="questions"></div>
+ <nav class="toc" id="toc"></nav>
 
-<h2>Generate report</h2>
-<p class="sub">This page does not send any data anywhere. Everything stays in your browser until you copy or download the report and share it yourself.</p>
-<div class="actions">
-<button class="btn pri" id="gen">Generate report</button>
-<button class="btn" id="copy">Copy</button>
-<button class="btn" id="dl">Download .md</button>
-<button class="btn" id="dlj">Download .json</button>
-<a class="btn" id="mail" style="text-decoration:none">Email it to us</a>
-<button class="btn" id="reset">Clear all</button>
-</div>
-<pre id="out">Click “Generate report”.</pre>
-</div>
+ <div class="filters">
+  <input type="search" id="q" placeholder="Search features…">
+  <label><input type="checkbox" id="onlyOpen"> Show unanswered only</label>
+  <button class="btn sm" onclick="armed(this,acceptDefaults)">Accept suggested V1/V2 defaults for everything</button>
+  <button class="btn sm" onclick="toggleAll(true)">Expand all</button>
+  <button class="btn sm" onclick="toggleAll(false)">Collapse all</button>
+  <button class="btn sm" onclick="armed(this,resetAll)">Reset everything</button>
+ </div>
+
+ <div id="app"></div>
+</main>
+<footer>This page does not send any data anywhere. Everything stays in your browser until you copy or download the report and share it yourself.</footer>
 <div class="toast" id="toast"></div>
 
 <script>
-// ===== CONFIG: set this to receive the emailed report =====
-const OWNER_EMAIL = "Info@hyperdynamics.in";
-const STORAGE_KEY = "mobility-reqs-v1";
-
-// ===== FEATURE CATALOGUE (edit freely) =====
-const SECTIONS = [
-{t:"Rider / Passenger App", f:[
- ["Sign-up & login (phone OTP, email, social)","V1"],
- ["Book a ride: pickup, drop-off, vehicle type","V1"],
- ["Live driver tracking on map","V1"],
- ["Fare estimate before booking","V1"],
- ["Scheduled / advance bookings","V2"],
- ["Ride history & receipts","V1"],
- ["Ratings & feedback for drivers","V1"],
- ["Saved places (home, work)","V2"],
- ["Promo codes & referral rewards","V2"],
- ["Share trip / SOS emergency button","V1"],
- ["Multi-language & RTL support","V2"]]},
-{t:"Driver App", f:[
- ["Driver onboarding & document upload","V1"],
- ["Online / offline toggle","V1"],
- ["Accept / reject ride requests","V1"],
- ["In-app navigation (turn-by-turn)","V1"],
- ["Earnings dashboard & payout history","V1"],
- ["Incentives, bonuses & surge zones","V2"],
- ["Rider ratings & trip history","V1"],
- ["Vehicle management (multiple vehicles)","V2"]]},
-{t:"Dispatch & Matching", f:[
- ["Automatic nearest-driver matching","V1"],
- ["Manual dispatch by admin","V1"],
- ["Surge / dynamic pricing","V2"],
- ["Ride pooling / shared rides","Optional"],
- ["Airport / zone-based queues","Optional"]]},
-{t:"Payments & Pricing", f:[
- ["Cash payments","V1"],
- ["Card / wallet payments (online gateway)","V1"],
- ["In-app wallet & top-up","V2"],
- ["Fare rules: base, per km, per minute, waiting, cancellation","V1"],
- ["Driver commission & automated payouts","V1"],
- ["Invoices & tax handling","V2"],
- ["Corporate accounts / monthly billing","Optional"]]},
-{t:"Admin Panel", f:[
- ["Dashboard with live KPIs","V1"],
- ["Driver approval & document verification","V1"],
- ["Rider & driver management","V1"],
- ["Trip monitoring & live map","V1"],
- ["Pricing, zones & vehicle-type configuration","V1"],
- ["Reports & CSV export","V2"],
- ["Role-based admin permissions","V2"],
- ["Support tickets & disputes","V2"]]},
-{t:"Communication & Notifications", f:[
- ["Push notifications","V1"],
- ["SMS notifications / OTP","V1"],
- ["Email notifications & receipts","V2"],
- ["In-app chat or masked calling rider↔driver","V2"]]},
-{t:"Safety & Compliance", f:[
- ["Trip sharing with contacts","V2"],
- ["Driver background-check workflow","V2"],
- ["Audit logs & data export (privacy)","V2"],
- ["Insurance / incident reporting","Optional"]]},
-{t:"Platform & Delivery", f:[
- ["Android app","V1"],
- ["iOS app","V1"],
- ["Rider web booking page","Optional"],
- ["Public API / third-party integrations","Optional"],
- ["Analytics & tracking (e.g. Firebase)","V2"],
- ["Training & documentation","V1"]]}
+/* ============ DATA ============ */
+// item suffix: ~2 = suggested V2, ~o = optional; otherwise V1
+const FEATURE_SECTIONS = [
+ // ---------- CUSTOMER APP ----------
+ {id:'c1',part:'Customer Android App',title:'2.1 Registration & Login',items:['Mobile number registration','OTP verification','Customer profile','Name and email','Profile photograph','Saved addresses','Emergency contacts','Multiple vehicle registration','Login / logout','Edit profile','Account deletion request']},
+ {id:'c2',part:'Customer Android App',title:'2.2 Home Screen & Services',items:['Driver on Demand','Hourly Driver','Full-day Driver','Night Driver','Outstation Driver','Cab Booking','Airport Pickup and Drop','Local Cab Rental','Outstation Cab','Service availability indicator','Offers and promotions','Recent bookings','Upcoming bookings']},
+ {id:'c3',part:'Customer Android App',title:'2.3 Driver-on-Demand Booking',items:['Immediate booking','Scheduled booking','Pickup location selection','Destination selection','Map pin adjustment','Current location detection','Add intermediate stops','Select booking date and time','Select duty package','Select vehicle details','One-way and round-trip options','Add driver instructions','View estimated fare','Apply coupon','Confirm booking','Booking ID generation','Cancel booking','Modify booking request']},
+ {id:'c4',part:'Customer Android App',title:'2.4 Driver Packages',items:['2-hour package','4-hour package','8-hour package','12-hour package','Full-day package','Night duty','Outstation one-way','Outstation round trip','Custom-duration booking']},
+ {id:'c5',part:'Customer Android App',title:'2.5 Cab Booking',items:['Pickup and destination selection','Multiple stops','Vehicle category: Mini','Vehicle category: Sedan','Vehicle category: SUV','Vehicle category: MUV','Vehicle category: Premium','Vehicle category: Tempo Traveller~o','One-way booking','Round-trip booking','Airport transfer','Hourly rental','Local rental','Outstation rental','Estimated distance','Estimated duration','Estimated fare']},
+ {id:'c6',part:'Customer Android App',title:'2.6 Fare Estimation',items:['Base fare','Minimum fare','Package charges','Included hours / distance','Extra-hour charges','Per-kilometre charges','Waiting charges','Night charges','Outstation allowance','Additional stop charges','Toll and parking','Taxes (GST)','Discounts','Cancellation charges','Final fare breakdown']},
+ {id:'c7',part:'Customer Android App',title:'2.7 Booking Confirmation',items:['Unique booking ID','Booking confirmation','Driver assignment notification','Driver name','Driver photograph','Driver rating','Driver experience','Driver contact number','Vehicle details (cab bookings)','Driver arrival ETA','Booking modification','Booking cancellation']},
+ {id:'c8',part:'Customer Android App',title:'2.8 Live Tracking',items:['Real-time driver GPS location','Driver approaching notification','Driver arrival notification','Live ETA','Distance to pickup','Call driver','In-app chat','Share trip location','Trip status tracking','Trip start notification','Trip completion notification']},
+ {id:'c9',part:'Customer Android App',title:'2.9 Payments',items:['Cash payment','UPI','Debit / credit cards','Net banking','Online payment gateway','Payment receipt','Payment history','Refund tracking','Promo codes','Invoice generation']},
+ {id:'c10',part:'Customer Android App',title:'2.10 Safety',items:['SOS button','Emergency contact notification','Share live trip location','Driver identification','Background verification indicator','Incident reporting','Customer support','Lost-property reporting','Trip insurance information']},
+ {id:'c11',part:'Customer Android App',title:'2.11 Booking History',items:['Upcoming bookings','Ongoing bookings','Completed bookings','Cancelled bookings','Rebook previous trip','Download invoice','Driver rating','Service rating','Feedback','Complaints','Support ticket tracking']},
+ {id:'c12',part:'Customer Android App',title:'2.12 Customer Profile & Settings',items:['Personal information','Saved addresses','Saved vehicles','Emergency contacts','Payment preferences','Notification preferences','Language selection','Help and support','Terms and conditions','Privacy policy','Logout','Account deletion']},
+ // ---------- DRIVER APP ----------
+ {id:'d1',part:'Driver Android App',title:'3.1 Driver Registration & KYC',items:['Mobile number registration','OTP verification','Personal details','Profile photograph','Address details','Driving licence upload','Aadhaar / identity verification','Address proof','Police verification','Background verification','Driving experience','Emergency contact','Bank account details','Document expiry tracking','Admin approval','Document re-submission']},
+ {id:'d2',part:'Driver Android App',title:'3.2 Driver Availability',items:['Go online','Go offline','Available / unavailable status','Working hours','Service area selection','Duty type preferences','Break mode','Availability calendar','Prevent overlapping duties']},
+ {id:'d3',part:'Driver Android App',title:'3.3 Booking Requests',items:['New booking notification','Booking ID','Customer details','Pickup location','Destination','Duty date and time','Duty duration','Estimated earnings','Accept booking','Reject booking','Rejection reason','Request timeout','Assigned duties','Upcoming duties','Active duties','Completed duties','Cancelled duties']},
+ {id:'d4',part:'Driver Android App',title:'3.4 Navigation',items:['Google Maps integration','Navigation to pickup','Distance to pickup','Estimated arrival time','Customer calling','Customer location confirmation','“Arrived at pickup” button','OTP-based customer verification']},
+ {id:'d5',part:'Driver Android App',title:'3.5 Trip Execution',items:['Start duty','Start timestamp','Start odometer reading','Live GPS tracking','Record intermediate stops','Waiting time calculation','Break tracking','End duty','End timestamp','End odometer reading','Trip distance calculation','Trip duration calculation','Final fare calculation','Trip completion confirmation']},
+ {id:'d6',part:'Driver Android App',title:'3.6 Driver Earnings',items:['Today\'s earnings','Weekly earnings','Monthly earnings','Completed duty count','Incentives','Bonus earnings','Commission deduction','Platform fees','Penalties','Wallet balance','Withdrawal requests','Payout history','Earnings statements']},
+ {id:'d7',part:'Driver Android App',title:'3.7 Driver Performance',items:['Completed duties','Acceptance rate','Rejection rate','Cancellation rate','Customer ratings','Customer feedback','Attendance','Duty hours','Performance score','Training notifications']},
+ {id:'d8',part:'Driver Android App',title:'3.8 Driver Support & Safety',items:['SOS','Emergency support','Call operations team','Report customer','Accident reporting','Breakdown assistance','Incident reporting','Lost-property reporting','Support tickets']},
+ {id:'d9',part:'Driver Android App',title:'3.9 Driver Profile',items:['Profile management','Document management','Bank account management','Password management','Language selection','Notification settings','Duty preferences','Logout']},
+ // ---------- ADMIN ----------
+ {id:'a1',part:'Admin Web Panel',title:'4.1 Dashboard — KPIs',items:['Total customers','Total registered drivers','Approved drivers','Pending driver approvals','Available drivers','Drivers currently on duty','Total vehicles','Active bookings','Scheduled bookings','Completed bookings','Cancelled bookings','Unassigned bookings','Today\'s revenue','Monthly revenue','Pending payments','Pending refunds','Open support tickets']},
+ {id:'a1b',part:'Admin Web Panel',title:'4.1 Dashboard — Analytics',items:['Daily booking trends','Weekly booking trends','Monthly booking trends','Revenue charts','Driver utilisation','Service-wise bookings','City / zone-wise bookings','Payment method distribution','Cancellation analysis','Customer acquisition']},
+ {id:'a2',part:'Admin Web Panel',title:'4.2 Customer Management',items:['View all customers','Search by name, phone or customer ID','View customer profiles','View booking history','View payment history','View complaints','Manage customer wallet','Block / unblock customers','Manage corporate customers~2','Export customer data']},
+ {id:'a3',part:'Admin Web Panel',title:'4.3 Driver Management',items:['Driver registration','Document verification','Approve / reject drivers','Driver profile management','Driving licence verification','Background verification status','Document expiry alerts','Driver availability','Driver location','Driver performance','Driver ratings','Driver earnings','Driver settlement','Suspend / reactivate drivers','Driver training management']},
+ {id:'a4',part:'Admin Web Panel',title:'4.4 Fleet Management',items:['Register cab partners','Vehicle registration','RC verification','Insurance verification','Permit verification','Vehicle fitness certificate','Vehicle categories','Vehicle availability','Driver–vehicle mapping','Cab partner earnings','Vehicle maintenance status','Document expiry alerts']},
+ {id:'a5',part:'Admin Web Panel',title:'4.5 Booking Management',items:['View all bookings','Create booking manually','Edit booking','Cancel booking','Assign drivers manually','Automatic driver allocation','Reassign drivers','Assign cabs','Track active bookings','Monitor scheduled bookings','View booking details','Booking status management','Manage additional stops','Handle customer requests','View trip history','Export booking reports']},
+ {id:'a6',part:'Admin Web Panel',title:'4.6 Live Operations & Dispatch',items:['Live map showing online drivers','Driver availability status','Active trip monitoring','Nearby driver identification','Driver allocation based on distance','Manual driver allocation','Automatic driver allocation','Driver reassignment','Unassigned booking alerts','Delayed driver alerts','Trip deviation alerts','Customer support intervention','Emergency trip monitoring']},
+ {id:'a7',part:'Admin Web Panel',title:'4.7 Hybrid Dispatch Engine',items:['Auto-allocation: find online and available drivers','Auto-allocation: filter by service type','Auto-allocation: check driver eligibility','Auto-allocation: check distance from pickup','Auto-allocation: check schedule conflicts','Auto-allocation: rank eligible drivers','Auto-allocation: send request, handle accept/reject','Auto-allocation: retry with next driver','Auto-allocation: move unassigned booking to admin queue','Manual: view unassigned bookings and nearby drivers','Manual: filter by service type, select and assign driver','Manual: notify driver and reassign','Manual: record admin action (audit)','Configurable search radius (start 5 km → 10 km → 15 km)','Configurable driver response timeout (20 s)','Configurable max automatic attempts (3)']},
+ {id:'a8',part:'Admin Web Panel',title:'4.8 Pricing & Tariff Management',items:['Driver hourly rates','2 / 4 / 8 / 12-hour package pricing','Full-day rates','Night charges','Outstation rates','Cab kilometre rates','Waiting charges','Additional-hour charges','Extra-stop charges','Peak-hour pricing','City-specific pricing','Service-specific pricing','Taxes','Cancellation fees','Minimum fare','Toll and parking rules','Pricing version management']},
+ {id:'a9',part:'Admin Web Panel',title:'4.9 Payment & Finance',items:['Booking-wise payments','Cash collection tracking','UPI / card payment tracking','Payment gateway reconciliation','Driver commission','Platform commission','Driver payouts','Refund management','Wallet management','Outstanding payments','Invoice generation','GST reports','Revenue reports','Settlement reports','Financial audit trail']},
+ {id:'a10',part:'Admin Web Panel',title:'4.10 Coupon Management',items:['Create promotional codes','Flat discounts','Percentage discounts','First-booking offers','Referral offers~2','Service-specific offers','Customer-specific offers','Expiry date','Usage limits','Minimum booking amount','Maximum discount','Campaign analytics']},
+ {id:'a11',part:'Admin Web Panel',title:'4.11 Customer Support',items:['Support ticket management','Customer complaints','Driver complaints','Trip disputes','Refund requests','Lost property cases','Accident reporting','Emergency escalations','Assign tickets to agents','Ticket status tracking','Internal notes','Resolution history']},
+ {id:'a12',part:'Admin Web Panel',title:'4.12 Notification Management',items:['Push notifications','SMS notifications','Email notifications','WhatsApp notifications','Booking confirmation templates','Driver allocation alerts','Payment reminders','Promotional campaigns','Driver onboarding messages','Document expiry reminders','Custom audience targeting']},
+ {id:'a13',part:'Admin Web Panel',title:'4.13 Reports & Analytics',items:['Revenue report','Booking report','Driver earnings report','Driver performance report','Customer report','Service-wise report','Cancellation report','Payment report','Commission report','City / zone-wise report','GST report','Daily operational report','Export to Excel / PDF / CSV']},
+ {id:'a14',part:'Admin Web Panel',title:'4.14 Admin Users & Permissions (separate permissions per role)',items:['Super Admin','Operations Manager','Booking Executive','Driver Manager','Finance Manager','Customer Support Executive','Marketing Manager','City Manager']},
+ {id:'a15',part:'Admin Web Panel',title:'4.15 System Configuration',items:['City management','Service area management','Geofencing','Service availability','Holiday management','Business hours','App configuration','Payment gateway configuration','Maps API configuration','SMS gateway configuration','Notification configuration','Audit logs','System activity logs','API monitoring']},
+ // ---------- V2 MODULES ----------
+ {id:'v1',part:'Additional Modules (suggested Phase 2)',title:'5.1 Corporate Portal',items:['Corporate account registration~2','Employee profiles~2','Bulk driver bookings~2','Monthly driver contracts~2','Office pickup / drop scheduling~2','Department-wise billing~2','Credit limits~2','Monthly consolidated invoices~2','Employee travel reports~2','Dedicated account manager~2']},
+ {id:'v2',part:'Additional Modules (suggested Phase 2)',title:'5.2 Monthly Driver Services',items:['Monthly driver requirement form~2','Driver profile shortlist~2','Customer / driver interview~2','Monthly contract terms~2','Attendance tracking~2','Leave management~2','Replacement requests~2','Monthly invoices~2','Contract renewal~2','Contract termination~2']},
+ {id:'v3',part:'Additional Modules (suggested Phase 2)',title:'5.3 Driver Recruitment Portal',items:['Online applications~2','Document submission~2','Interview scheduling~2','Driving test status~2','Background verification~2','Training management~2','Joining and activation~2']},
+ {id:'v4',part:'Additional Modules (suggested Phase 2)',title:'5.4 Referral, Loyalty & Subscriptions',items:['Customer referral codes~2','Driver referral codes~2','Referral rewards~2','Loyalty points~2','Membership plans~2','Subscription packages~2','Reward redemption~2','Referral analytics~2']},
+ {id:'v5',part:'Additional Modules (suggested Phase 2)',title:'5.5 Advanced Dispatch & Intelligence',items:['Demand heatmaps~2','Driver supply forecasting~2','Demand-based pricing recommendations~2','Advanced driver ranking~2','Driver shift planning~2','Automated reassignment~2','Fraud / anomaly alerts~2','Operational performance recommendations~2']},
+ {id:'v6',part:'Additional Modules (suggested Phase 2)',title:'5.6 Valet Services',items:['Event / hotel booking~2','Valet staff scheduling~2','Venue and shift management~2','Vehicle check-in / check-out~2','Key handover tracking~2','Incident reporting~2','Client billing~2']},
+ {id:'v7',part:'Additional Modules (suggested Phase 2)',title:'Other platform scope',items:['iOS customer app~2','iOS driver app~2','Multi-city management~2','AI demand prediction~2','Customer web booking website~o','Driver web portal~o','Additional app languages (e.g. Kannada, Hindi, Tamil)~o','Dark mode~o','Tablet / large-screen layouts~o']},
+ // ---------- Integrations ----------
+ {id:'i1',part:'Platform & Integrations',title:'6. Integrations & Platform Choices',items:['Google Maps Platform (maps, routing, distance)','Razorpay payment gateway','Firebase Cloud Messaging (push notifications)','OTP / SMS provider','WhatsApp Business API notifications','Email provider','AWS S3 file storage (documents, photos)','Monitoring and crash reporting','Aadhaar / DigiLocker e-KYC API verification~o','Driving licence / RC verification via API (e.g. Parivahan data)~o','Third-party background-verification vendor API~o','e-Invoicing / GST portal integration~o','Masked-number calling (hide phone numbers)~o','Real-time WebSocket tracking']}
 ];
 
-const QUESTIONS = [
-{t:"Business questions", q:[
- ["Which city / country will you launch in?","text"],
- ["Expected number of drivers at launch?","text"],
- ["Expected number of riders / monthly trips in year 1?","text"],
- ["Vehicle types (bike, car, van, premium…)?","text"],
- ["Do you have existing branding / designs?","select",["Yes, ready","Partly","No, need design"]],
- ["Target launch date?","text"],
- ["Existing competitors or apps you like?","area"]]},
-{t:"External costs (paid by you to third parties)", q:[
- ["Maps provider (Google Maps / Mapbox) — do you already have an account?","select",["Yes","No, need help","Undecided"]],
- ["Payment gateway preferred / already used?","text"],
- ["SMS provider preferred / already used?","text"],
- ["Apple Developer & Google Play accounts?","select",["Have both","Have one","Neither"]],
- ["Hosting preference","select",["AWS","Google Cloud","Azure","Your recommendation","Own servers"]]]},
-{t:"Project terms", q:[
- ["Budget range","text"],
- ["Preferred engagement","select",["Fixed price","Time & material","Open to either"]],
- ["Who is the decision-maker / main contact?","text"],
- ["Post-launch support & maintenance needed?","select",["Yes, monthly retainer","Only warranty period","No"]],
- ["Anything else we should know?","area"]]}
+const DISCOVERY = [
+ {g:'About you & your business',q:[
+  {id:'biz_name',l:'Company / brand name',t:'text'},
+  {id:'biz_contact',l:'Primary contact person',t:'text'},
+  {id:'biz_phone',l:'Phone / WhatsApp',t:'text'},
+  {id:'biz_email',l:'Email',t:'text'},
+  {id:'biz_stage',l:'Current business stage',t:'select',o:['Just an idea','Business registered, not operating','Already operating (offline / phone-based)','Already operating with an app / software']},
+  {id:'biz_exist',l:'If already operating: current size (drivers, daily bookings, cities)',t:'area',w:1},
+  {id:'biz_decider',l:'Who approves scope and quotation? Typical approval turnaround?',t:'text',w:1}]},
+ {g:'Launch & scale',q:[
+  {id:'city',l:'Launch city',t:'text',h:'Proposal assumes a single city (Bengaluru, provisional)'},
+  {id:'launch',l:'Target launch date / any hard deadline',t:'text'},
+  {id:'drivers_launch',l:'Expected number of drivers at launch',t:'text'},
+  {id:'bookings',l:'Expected bookings per day (first 3 months)',t:'text'},
+  {id:'hours',l:'Service hours',t:'select',o:['24 × 7','Daytime only','Daytime + night (limited)','To be decided']},
+  {id:'budget',l:'Budget range for the build',t:'select',o:['Prefer not to say now','Below ₹5 lakh','₹5–10 lakh','₹10–20 lakh','₹20–35 lakh','Above ₹35 lakh']},
+  {id:'budget_note',l:'Budget remarks (phase-wise, fixed cap, etc.)',t:'text'}]},
+ {g:'Business model & operations',q:[
+  {id:'model_first',l:'Which service launches first?',t:'select',o:['Driver on Demand','Cab Booking','Both together']},
+  {id:'fleet',l:'Cab fleet source',t:'select',o:['Own vehicles','Attached / partner vehicles','Both','No cabs at launch (drivers only)']},
+  {id:'commission',l:'Revenue model',t:'select',o:['Commission % per trip','Fixed fee per trip','Driver subscription','Mixed / to be decided']},
+  {id:'comm_pct',l:'Planned commission / fee (if known)',t:'text'},
+  {id:'cash',l:'How will cash trips be settled with drivers?',t:'select',o:['Driver keeps cash, commission deducted from wallet','Driver remits commission periodically','Online payment only','To be decided']},
+  {id:'ops_team',l:'Operations team size & support hours',t:'text'},
+  {id:'dispatch',l:'Dispatch preference at launch',t:'select',o:['Automatic first, admin fallback (as proposed)','Mostly manual by admin','Fully automatic']},
+  {id:'insurance',l:'Trip / passenger insurance planned?',t:'select',o:['Yes','No','Not decided']}]},
+ {g:'Accounts, compliance & assets',q:[
+  {id:'razorpay',l:'Payment gateway account (Razorpay) status',t:'select',o:['Already have an account','Will apply (have business documents)','Need guidance']},
+  {id:'gst',l:'GST registration in place?',t:'select',o:['Yes','In process','No']},
+  {id:'licence',l:'Aggregator / transport licensing status (Karnataka)',t:'select',o:['Obtained','Applied','Not started — need guidance','Not applicable (per legal advice)']},
+  {id:'play',l:'Google Play Developer account',t:'select',o:['Have one (in company name)','Will create','Need us to create on your behalf']},
+  {id:'brand',l:'Branding assets (logo, colours, guidelines)',t:'select',o:['Ready','Logo only','Need design support']},
+  {id:'domain',l:'Domain name / website',t:'text'},
+  {id:'langs',l:'App languages needed',t:'text',h:'e.g. English, Kannada, Hindi'},
+  {id:'kyc',l:'Driver KYC / background verification approach',t:'select',o:['Manual document review by admin (default)','API-based e-KYC (extra cost)','Third-party verification agency','Discuss']},
+  {id:'refs',l:'Reference apps you like / dislike (and why)',t:'area',w:1},
+  {id:'integr',l:'Any existing systems to integrate or data to migrate? (accounting, ERP, CRM, existing driver list…)',t:'area',w:1},
+  {id:'support_after',l:'Post-launch support expectation',t:'area',w:1},
+  {id:'other',l:'Anything else we should know?',t:'area',w:1}]}
 ];
 
-// ===== STATE =====
-let S = {client:{}, ans:{}, notes:{}, q:{}};
-try{ const x=localStorage.getItem(STORAGE_KEY); if(x) S=Object.assign(S,JSON.parse(x)); }catch(e){}
-const save=()=>{try{localStorage.setItem(STORAGE_KEY,JSON.stringify(S))}catch(e){}};
+const COSTS = [
+ {id:'x_maps',t:'Google Maps Platform',k:'usage',who:'Client',d:'Maps, geocoding, routing, distance matrix, live tracking. Billed by Google per API usage; a billing account (card) is required. Cost grows with bookings and live-tracking volume.'},
+ {id:'x_pg',t:'Payment gateway fees (Razorpay)',k:'usage',who:'Client',d:'Per-transaction fee deducted by the gateway (typically around 2% + GST on cards/net banking; UPI/other rates vary — confirm with the provider). Gateway KYC and business documents come from the client.'},
+ {id:'x_aws',t:'Cloud hosting (AWS) — servers, database, cache',k:'monthly',who:'Client',d:'Production + staging environments. Monthly cost depends on load. Account to be created in the client\'s name; we configure it.'},
+ {id:'x_s3',t:'File storage (AWS S3) & data transfer',k:'usage',who:'Client',d:'Driver documents, photos, invoices, backups.'},
+ {id:'x_sms',t:'OTP / SMS gateway',k:'usage',who:'Client',d:'Per-SMS charges. Indian DLT registration (entity, sender ID, templates) is required and is done by the client with the SMS provider.'},
+ {id:'x_wa',t:'WhatsApp Business API',k:'usage',who:'Client',d:'Provider onboarding fees plus per-conversation / per-message charges set by Meta and the BSP.'},
+ {id:'x_email',t:'Email delivery service (e.g. AWS SES)',k:'usage',who:'Client',d:'Low per-email cost for invoices and notifications.'},
+ {id:'x_fcm',t:'Firebase (FCM push, Crashlytics)',k:'free',who:'Client',d:'Push notifications and crash reporting are generally free at this scale; account should be in the client\'s name.'},
+ {id:'x_mon',t:'Monitoring / error tracking / log tools',k:'monthly',who:'Client',d:'Basic tools are free or low-cost; larger plans may be needed as traffic grows.'},
+ {id:'x_play',t:'Google Play Developer account',k:'once',who:'Client',d:'One-time registration fee (around US$25). Business accounts need verification documents.'},
+ {id:'x_domain',t:'Domain, SSL, admin-panel hosting URL',k:'yearly',who:'Client',d:'Annual domain renewal; SSL certificates are generally free or bundled.'},
+ {id:'x_kyc',t:'e-KYC / licence / RC verification APIs',k:'usage',who:'Client',d:'Only if API-based verification is chosen. Per-check charges by the verification provider.'},
+ {id:'x_bgv',t:'Background / police verification agency',k:'usage',who:'Client',d:'Per-driver fee charged by the agency, if used.'},
+ {id:'x_mask',t:'Number masking / call routing service',k:'usage',who:'Client',d:'Only if masked calling between customer and driver is selected.'},
+ {id:'x_legal',t:'Legal, licensing & compliance',k:'once',who:'Client',d:'Company registrations, aggregator licence, driver agreements, T&C, privacy policy, data-protection advice. We do not provide legal services.'},
+ {id:'x_ins',t:'Insurance (passenger / vehicle / liability)',k:'recurring',who:'Client',d:'Policy purchase and claims handling are the client\'s responsibility.'},
+ {id:'x_hw',t:'Hardware (test phones, devices, office equipment)',k:'once',who:'Client',d:'Hardware procurement is not part of the development scope.'},
+ {id:'x_ops',t:'Operations & support staffing',k:'recurring',who:'Client',d:'Call-centre / dispatch / support executives, driver onboarding staff.'},
+ {id:'x_mkt',t:'Marketing, launch campaigns, driver acquisition',k:'recurring',who:'Client',d:'Ads, promotions, referral budgets, offline activation.'},
+ {id:'x_sec',t:'Independent security audit / penetration test',k:'once',who:'Client (optional)',d:'We follow secure development practices; a formal third-party audit is an optional extra.'},
+ {id:'x_ios',t:'Apple Developer account (only if iOS added later)',k:'yearly',who:'Client',d:'Not needed for V1 (Android only).'},
+ {id:'x_dev',t:'Change requests / extra features after scope freeze',k:'dev',who:'Client',d:'Billed separately as agreed change requests.'}
+];
+const KIND = {usage:'Pay-as-you-use',monthly:'Monthly',yearly:'Yearly',once:'One-time',recurring:'Recurring (ongoing)',free:'Free / low',dev:'Development'};
+
+const TERMS = [
+ {id:'t_scope',t:'Scope freeze',d:'Scope is frozen once the Software Requirements Specification (SRS) is approved in writing. This selection form feeds the SRS.'},
+ {id:'t_cr',t:'Change requests',d:'Any feature added or changed after scope freeze is handled through a change request with its own estimate and timeline impact.'},
+ {id:'t_v1',t:'V1 platform scope',d:'V1 = Android customer app, Android driver app, web admin panel, single city, hybrid dispatch. iOS, corporate portal, multi-city, monthly contracts, valet, loyalty/subscriptions and AI prediction are excluded unless separately agreed.'},
+ {id:'t_timeline',t:'Timeline',d:'Indicative 16–20 weeks from SRS approval: design & architecture (wk 1–2), apps & KYC (3–5), booking & dispatch (6–8), tracking & trip (9–10), pricing & payments (11–12), notifications, support, reports (13–14), QA & launch (15–16), stabilisation buffer (17–20).'},
+ {id:'t_client_dep',t:'Client responsibilities & dependencies',d:'Timely feedback and approvals, business and payment-gateway documents, API accounts (Maps, SMS, WhatsApp, AWS, Razorpay), tariff and commission rules, content and branding. Client-side delays may extend the schedule.'},
+ {id:'t_uat',t:'UAT criteria',d:'Acceptance (UAT) criteria are agreed before testing begins; the acceptance test list in the requirements baseline is the starting point.'},
+ {id:'t_pay',t:'Payment milestones',d:'Development fee is paid in milestones tied to deliverables (e.g. advance on SRS approval, then stage-wise). Exact split to be set in the quotation.'},
+ {id:'t_3p',t:'Third-party costs billed separately',d:'All items in the External Costs section are paid by the client directly to the provider (or reimbursed at actuals) — not included in the development fee.'},
+ {id:'t_accounts',t:'Account ownership',d:'AWS, Google Maps, Razorpay, Firebase, Play Store and domain accounts are created in the client\'s name; we are given the access needed to build and deploy.'},
+ {id:'t_ip',t:'Source code & IP',d:'Ownership of source code and IP is as defined in the contract (typically transferred to the client on full payment, excluding third-party and open-source components).'},
+ {id:'t_warranty',t:'Warranty & AMC',d:'A bug-fix warranty period after go-live and a separate paid Annual Maintenance Contract (AMC) for support, updates and hosting administration will be defined separately.'},
+ {id:'t_support',t:'Post-launch support',d:'Bug fixes within warranty are free; new features, OS-upgrade work and operational support beyond warranty fall under AMC or change requests.'},
+ {id:'t_legal',t:'Legal & licensing',d:'The client is responsible for business registrations, cab-aggregator/transport licences, driver agreements, passenger terms, insurance and data-protection compliance. We provide no legal advice.'},
+ {id:'t_privacy',t:'Privacy & location consent',d:'The apps will collect location data (including background location for drivers during duty) with clear user consent; the client publishes the privacy policy and retention rules.'},
+ {id:'t_data',t:'Data ownership & hosting',d:'Customer, driver and trip data belong to the client. Data is hosted on AWS (region to be agreed); backups and retention follow agreed policy.'},
+ {id:'t_pilot',t:'Pilot & go-live',d:'A limited pilot with real drivers/customers precedes full launch; launch KPIs (assignment rate, acceptance, completion, payment success, ratings) are tracked as targets, not guarantees.'},
+ {id:'t_conf',t:'Confidentiality',d:'Both parties keep business information, designs and data confidential; an NDA can be signed if required.'},
+ {id:'t_ops',t:'Operations not included',d:'Ongoing operations staffing, driver acquisition, marketing, customer support personnel, and cloud / SMS / gateway usage are outside the development scope.'}
+];
+
+/* ============ STATE ============ */
+const KEY='driver-platform-requirements-v1';
+let S={ans:{},notes:{},secnotes:{},disc:{},cost:{},costnote:{},term:{},termnote:{}};
+try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+
+/* ============ HELPERS ============ */
 const $=s=>document.querySelector(s);
-const el=(t,a={},...c)=>{const n=document.createElement(t);for(const k in a){if(k==="class")n.className=a[k];else if(k.startsWith("on"))n.addEventListener(k.slice(2),a[k]);else n.setAttribute(k,a[k])}c.forEach(x=>n.append(x));return n};
-const toast=m=>{const t=$("#toast");t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1800)};
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function parse(raw){let tag='v1',n=raw;if(raw.endsWith('~2')){tag='v2';n=raw.slice(0,-2)}else if(raw.endsWith('~o')){tag='o';n=raw.slice(0,-2)}return{n,tag}}
+const FEATS=[];
+FEATURE_SECTIONS.forEach(sec=>{sec.feats=sec.items.map((raw,i)=>{const p=parse(raw);const f={id:sec.id+'.'+i,n:p.n,tag:p.tag,sec:sec.id};FEATS.push(f);return f})});
+const TAGLBL={v1:'V1',v2:'V2',o:'Optional'};
+let toastT;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2000)}
 
-// ===== RENDER =====
-const allFeatures=[];
-const root=$("#sections");
-SECTIONS.forEach((s,si)=>{
-  root.append(el("h2",{},`${si+1}. ${s.t}`));
-  s.f.forEach((f,fi)=>{
-    const id=`f${si}_${fi}`; allFeatures.push({id,sec:s.t,name:f[0],tag:f[1]});
-    const seg=el("div",{class:"seg"});
-    [["yes","Yes"],["later","Later"],["no","No"]].forEach(([v,l])=>{
-      seg.append(el("button",{type:"button",class:v,"aria-pressed":S.ans[id]===v,onclick:()=>{
-        S.ans[id]=S.ans[id]===v?undefined:v; seg.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",S.ans[id]===b.className)); save();update();}},l));
-    });
-    const ta=el("textarea",{placeholder:"Special requirement or question…"});ta.value=S.notes[id]||"";
-    ta.addEventListener("input",()=>{S.notes[id]=ta.value;save()});
-    const nb=el("div",{class:"note"+(S.notes[id]?" open":"")},ta);
-    const btn=el("button",{type:"button",class:"note-btn",onclick:()=>nb.classList.toggle("open")},"✎ Note");
-    root.append(el("div",{class:"card",id:"c_"+id},el("div",{class:"ft"},
-      el("div",{},el("h3",{},f[0],el("span",{class:"tag"},f[1]))),seg),btn,nb));
-  });
-});
-const qroot=$("#questions");
-QUESTIONS.forEach((g,gi)=>{
-  qroot.append(el("h2",{},`${SECTIONS.length+gi+1}. ${g.t}`));
-  g.q.forEach((q,qi)=>{
-    const id=`q${gi}_${qi}`; let inp;
-    if(q[1]==="select"){inp=el("select",{},el("option",{value:""},"— choose —"),...q[2].map(o=>el("option",{value:o},o)));}
-    else if(q[1]==="area"){inp=el("textarea");} else {inp=el("input",{type:"text"});}
-    inp.value=S.q[id]||"";
-    inp.addEventListener("input",()=>{S.q[id]=inp.value;save()});
-    inp.addEventListener("change",()=>{S.q[id]=inp.value;save()});
-    qroot.append(el("div",{class:"card"},el("label",{class:"f"},q[0],inp)));
-  });
-});
-["name","company","email","phone"].forEach(k=>{
-  const i=$("#c_"+k); i.value=S.client[k]||""; i.addEventListener("input",()=>{S.client[k]=i.value;save()});
-});
-
-function update(){
-  const n=allFeatures.filter(f=>S.ans[f.id]).length, t=allFeatures.length, p=Math.round(n/t*100);
-  $("#pc").textContent=`${n} of ${t} answered · ${p}%`; $("#pb").style.width=p+"%";
-  const only=$("#unans").checked;
-  allFeatures.forEach(f=>$("#c_"+f.id).classList.toggle("hide",only&&!!S.ans[f.id]));
+/* ============ RENDER ============ */
+function render(){
+ let html='';let lastPart='';
+ FEATURE_SECTIONS.forEach(sec=>{
+  if(sec.part!==lastPart){html+=`<h3 style="margin:22px 0 8px" id="part-${esc(sec.part.replace(/\W+/g,'-'))}">${esc(sec.part)}</h3>`;lastPart=sec.part}
+  html+=`<details class="sec" id="sec-${sec.id}" data-sec="${sec.id}"><summary><span class="sec-title">${esc(sec.title)}</span><span class="cnt" id="cnt-${sec.id}"></span></summary><div class="sec-body">
+  <div class="bulk"><button class="btn sm" data-bulk="y" data-s="${sec.id}">All Yes</button><button class="btn sm" data-bulk="l" data-s="${sec.id}">All Later</button><button class="btn sm" data-bulk="n" data-s="${sec.id}">All No</button><button class="btn sm" data-bulk="d" data-s="${sec.id}">Suggested defaults</button><button class="btn sm" data-bulk="c" data-s="${sec.id}">Clear</button></div>`;
+  sec.feats.forEach(f=>{html+=`<div class="row" data-id="${f.id}"><div class="nm">${esc(f.n)}<span class="tag ${f.tag}">${TAGLBL[f.tag]}</span></div><div class="seg"><button data-v="y">Yes</button><button data-v="l">Later</button><button data-v="n">No</button></div><button class="nbtn" data-note>✎ Note</button><textarea hidden placeholder="Notes / special requirement for “${esc(f.n)}”" data-nid="${f.id}"></textarea></div>`});
+  html+=`<div class="secnote"><label>Notes for this whole section (optional)</label><textarea data-snid="${sec.id}" placeholder="Anything about this module in general…"></textarea></div></div></details>`;
+ });
+ // Discovery
+ html+=`<h3 style="margin:26px 0 8px" id="part-disc">Business Questions</h3><details class="sec" open id="sec-disc"><summary><span class="sec-title">7. Business &amp; project questions<small>Helps us size the project and prepare an accurate quotation</small></span><span class="cnt" id="cnt-disc"></span></summary><div class="sec-body">`;
+ DISCOVERY.forEach(g=>{html+=`<h4 style="margin:16px 0 0">${esc(g.g)}</h4><div class="grid2">`;
+  g.q.forEach(q=>{let inp='';
+   if(q.t==='select')inp=`<select data-did="${q.id}"><option value="">— select —</option>${q.o.map(o=>`<option>${esc(o)}</option>`).join('')}</select>`;
+   else if(q.t==='area')inp=`<textarea data-did="${q.id}"></textarea>`;
+   else inp=`<input type="text" data-did="${q.id}">`;
+   html+=`<div class="fld ${q.w?'wide':''}"><label>${esc(q.l)}${q.h?` <span class="h">— ${esc(q.h)}</span>`:''}</label>${inp}</div>`});
+  html+=`</div>`});
+ html+=`</div></details>`;
+ // Costs
+ html+=`<h3 style="margin:26px 0 8px" id="part-cost">External Costs</h3><details class="sec" open id="sec-cost"><summary><span class="sec-title">8. External costs &amp; what is NOT included in the development fee<small>These are paid to third parties / by you, separately from our development quotation</small></span><span class="cnt" id="cnt-cost"></span></summary><div class="sec-body">
+ <div class="callout"><b>Please note:</b> amounts depend on provider pricing and your usage and change over time, so we do not quote fixed figures here. We will help estimate monthly running costs with the SRS. For each item, tell us whether you will arrange it (<b>Understood</b>), want to <b>Discuss</b> it, or it is <b>Not needed</b>.</div>`;
+ COSTS.forEach(c=>{html+=`<div class="costrow" data-cid="${c.id}"><div class="hd"><div style="flex:1 1 320px"><div class="t">${esc(c.t)}</div><div class="m"><span class="badge c">${esc(KIND[c.k])}</span><span class="badge">Paid by: ${esc(c.who)}</span></div><div class="m" style="margin-top:4px">${esc(c.d)}</div></div><div class="seg two"><button data-v="a">Understood</button><button data-v="d">Discuss</button><button data-v="x">Not needed</button></div></div><textarea data-cnid="${c.id}" placeholder="Note (optional)" style="width:100%;margin-top:6px;padding:6px;border:1px solid var(--line);border-radius:8px;font:inherit;font-size:13px;min-height:38px" hidden></textarea><button class="nbtn" data-cnote="${c.id}">✎ Note</button></div>`});
+ html+=`<div class="callout" style="margin-top:14px"><b>Also excluded from V1 unless separately agreed:</b> iOS apps · Corporate portal · Multi-city operations · Monthly driver contracts · Valet services · Loyalty &amp; subscription programmes · Advanced AI demand prediction · Hardware procurement · Legal / licensing services · Ongoing operations staffing.</div></div></details>`;
+ // Terms
+ html+=`<h3 style="margin:26px 0 8px" id="part-terms">Terms</h3><details class="sec" open id="sec-terms"><summary><span class="sec-title">9. Project terms &amp; commercial assumptions<small>Mark <b>Agree</b>, or <b>Discuss</b> if you want to talk about it</small></span><span class="cnt" id="cnt-terms"></span></summary><div class="sec-body">`;
+ TERMS.forEach(t=>{html+=`<div class="costrow" data-tid="${t.id}"><div class="hd"><div style="flex:1 1 320px"><div class="t">${esc(t.t)}</div><div class="m">${esc(t.d)}</div></div><div class="seg two"><button data-v="a">Agree</button><button data-v="d">Discuss</button></div></div><textarea data-tnid="${t.id}" placeholder="Note (optional)" style="width:100%;margin-top:6px;padding:6px;border:1px solid var(--line);border-radius:8px;font:inherit;font-size:13px;min-height:38px" hidden></textarea><button class="nbtn" data-tnote="${t.id}">✎ Note</button></div>`});
+ html+=`</div></details>`;
+ // Report
+ html+=`<h3 style="margin:26px 0 8px" id="part-report">Report</h3><details class="sec" open id="sec-report"><summary><span class="sec-title">10. Review &amp; generate report</span></summary><div class="sec-body"><div id="summary"></div>
+ <p style="font-size:13px;color:var(--mute)">When you are ready, generate the report and send it to us (WhatsApp / email). You can generate it again after making changes. Unanswered items are listed in the report so nothing is missed.</p>
+ <div class="bulk"><button class="btn pri" onclick="genReport()">Generate report</button><button class="btn" onclick="copyReport()">Copy report</button><button class="btn" onclick="dl('md')">Download .md</button><button class="btn" onclick="dl('json')">Download .json</button><button class="btn pri" onclick="emailReport()">Email report to us</button><button class="btn" onclick="exportProgress()">Save progress file</button><label class="btn" style="cursor:pointer">Load progress file<input type="file" accept=".json" id="imp" style="display:none"></label></div>
+ <textarea id="reportBox" readonly placeholder="Your report will appear here…"></textarea>
+ <p style="font-size:12px;color:var(--mute)">If a button does not copy or download in your viewer, click inside the box, press Ctrl/Cmd + A then Ctrl/Cmd + C, and paste the text into a message or email.</p></div></details>`;
+ $('#app').innerHTML=html;
+ // TOC
+ const parts=[...new Set(FEATURE_SECTIONS.map(s=>s.part))];
+ $('#toc').innerHTML=parts.map(p=>`<a href="#part-${p.replace(/\W+/g,'-')}">${esc(p)}</a>`).join('')+'<a href="#part-disc">Business Questions</a><a href="#part-cost">External Costs</a><a href="#part-terms">Terms</a><a href="#part-report">Report</a>';
+ restore();
 }
-$("#unans").addEventListener("change",update);
-
-// ===== REPORT =====
-const LBL={yes:"Yes (launch)",later:"Later",no:"No"};
-function build(){
-  const c=S.client, L=[];
-  L.push("# Requirements Report · Driver & Mobility Platform","");
-  L.push(`Date: ${new Date().toISOString().slice(0,10)}`);
-  L.push(`Name: ${c.name||"-"}`,`Company: ${c.company||"-"}`,`Email: ${c.email||"-"}`,`Phone: ${c.phone||"-"}`,"");
-  const cnt={yes:0,later:0,no:0,un:0};
-  allFeatures.forEach(f=>cnt[S.ans[f.id]||"un"]++);
-  L.push(`Summary: ${cnt.yes} Yes · ${cnt.later} Later · ${cnt.no} No · ${cnt.un} unanswered`,"");
-  SECTIONS.forEach((s,si)=>{
-    L.push(`## ${s.t}`);
-    allFeatures.filter(f=>f.sec===s.t).forEach(f=>{
-      L.push(`- [${S.ans[f.id]?LBL[S.ans[f.id]]:"UNANSWERED"}] ${f.name} (${f.tag})`+(S.notes[f.id]?`\n  - Note: ${S.notes[f.id].replace(/\n/g,"\n    ")}`:""));
-    });
-    L.push("");
-  });
-  QUESTIONS.forEach((g,gi)=>{
-    L.push(`## ${g.t}`);
-    g.q.forEach((q,qi)=>L.push(`- ${q[0]}\n  - Answer: ${S.q[`q${gi}_${qi}`]||"-"}`));
-    L.push("");
-  });
-  return L.join("\n");
+function restore(){
+ document.querySelectorAll('.row').forEach(r=>{const id=r.dataset.id;paintRow(r);const ta=r.querySelector('textarea');if(S.notes[id]){ta.value=S.notes[id];ta.hidden=false}});
+ document.querySelectorAll('[data-snid]').forEach(t=>t.value=S.secnotes[t.dataset.snid]||'');
+ document.querySelectorAll('[data-did]').forEach(e=>e.value=S.disc[e.dataset.did]||'');
+ document.querySelectorAll('[data-cid]').forEach(r=>{paintTwo(r,S.cost[r.dataset.cid]);const t=r.querySelector('textarea');if(S.costnote[r.dataset.cid]){t.value=S.costnote[r.dataset.cid];t.hidden=false}});
+ document.querySelectorAll('[data-tid]').forEach(r=>{paintTwo(r,S.term[r.dataset.tid]);const t=r.querySelector('textarea');if(S.termnote[r.dataset.tid]){t.value=S.termnote[r.dataset.tid];t.hidden=false}});
+ updateAll();
 }
-const gen=()=>{const r=build();$("#out").textContent=r;return r};
-$("#gen").onclick=gen;
-$("#copy").onclick=async()=>{const r=gen();try{await navigator.clipboard.writeText(r);toast("Copied")}catch(e){const s=document.createRange();s.selectNode($("#out"));getSelection().removeAllRanges();getSelection().addRange(s);toast("Select & copy manually")}};
-function dlFile(name,txt,type){const a=el("a",{href:URL.createObjectURL(new Blob([txt],{type})),download:name});document.body.append(a);a.click();a.remove()}
-const slug=()=>((S.client.company||S.client.name||"client").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"client");
-$("#dl").onclick=()=>dlFile(`requirements-${slug()}.md`,gen(),"text/markdown");
-$("#dlj").onclick=()=>dlFile(`requirements-${slug()}.json`,JSON.stringify(S,null,2),"application/json");
-$("#mail").onclick=e=>{
-  const r=gen(); const to=OWNER_EMAIL;
-  const body=r.length>1800?"Please find my requirements report attached (I downloaded it from the form).":r;
-  e.currentTarget.href=`mailto:${to}?subject=${encodeURIComponent("Requirements report – "+(S.client.company||S.client.name||""))}&body=${encodeURIComponent(body)}`;
-};
-$("#reset").onclick=()=>{if(confirm("Clear all your answers?")){try{localStorage.removeItem(STORAGE_KEY)}catch(e){}location.reload()}};
-update();
+function paintRow(r){const v=S.ans[r.dataset.id];r.querySelectorAll('.seg button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));const nb=r.querySelector('.nbtn');nb.classList.toggle('has',!!S.notes[r.dataset.id]);nb.textContent=S.notes[r.dataset.id]?'✎ Note ●':'✎ Note'}
+function paintTwo(r,v){r.querySelectorAll('.seg button').forEach(b=>b.classList.toggle('on',b.dataset.v===v))}
+
+function counts(secId){const c={y:0,l:0,n:0,u:0};FEATS.filter(f=>f.sec===secId).forEach(f=>{const v=S.ans[f.id];if(v)c[v]++;else c.u++});return c}
+function updateAll(){
+ FEATURE_SECTIONS.forEach(sec=>{const c=counts(sec.id);$('#cnt-'+sec.id).innerHTML=`<span class="pill p-y">${c.y}</span><span class="pill p-l">${c.l}</span><span class="pill p-n">${c.n}</span><span>${c.u} open</span>`});
+ const total=FEATS.length;const done=FEATS.filter(f=>S.ans[f.id]).length;
+ const dTot=DISCOVERY.reduce((a,g)=>a+g.q.length,0),dDone=DISCOVERY.reduce((a,g)=>a+g.q.filter(q=>S.disc[q.id]).length,0);
+ const cDone=COSTS.filter(c=>S.cost[c.id]).length,tDone=TERMS.filter(t=>S.term[t.id]).length;
+ const all=total+dTot+COSTS.length+TERMS.length,alld=done+dDone+cDone+tDone;
+ const pct=all?Math.round(alld/all*100):0;
+ $('#ptxt').textContent=`${alld} of ${all} answered`;$('#ppct').textContent=pct+'%';$('#pfill').style.width=pct+'%';
+ $('#cnt-disc').innerHTML=`<span>${dDone}/${dTot}</span>`;$('#cnt-cost').innerHTML=`<span>${cDone}/${COSTS.length}</span>`;$('#cnt-terms').innerHTML=`<span>${tDone}/${TERMS.length}</span>`;
+ const y=FEATS.filter(f=>S.ans[f.id]==='y').length,l=FEATS.filter(f=>S.ans[f.id]==='l').length,n=FEATS.filter(f=>S.ans[f.id]==='n').length;
+ $('#summary').innerHTML=`<div class="sumgrid"><div class="stat"><b style="color:var(--yes)">${y}</b><span>Yes (launch)</span></div><div class="stat"><b style="color:var(--later)">${l}</b><span>Later</span></div><div class="stat"><b style="color:var(--no)">${n}</b><span>No</span></div><div class="stat"><b>${total-done}</b><span>Unanswered features</span></div><div class="stat"><b>${dDone}/${dTot}</b><span>Business questions</span></div><div class="stat"><b>${cDone}/${COSTS.length}</b><span>External costs reviewed</span></div><div class="stat"><b>${tDone}/${TERMS.length}</b><span>Terms reviewed</span></div></div>`;
+ applyFilter();
+}
+function applyFilter(){
+ const q=$('#q').value.trim().toLowerCase(),open=$('#onlyOpen').checked;
+ document.querySelectorAll('.row').forEach(r=>{const f=FEATS.find(x=>x.id===r.dataset.id);let show=true;if(q&&!(f.n.toLowerCase().includes(q)||(S.notes[f.id]||'').toLowerCase().includes(q)))show=false;if(open&&S.ans[f.id])show=false;r.classList.toggle('hide',!show)});
+ if(q){document.querySelectorAll('details.sec').forEach(d=>{if(d.querySelector('.row:not(.hide)'))d.open=true})}
+}
+
+/* ============ EVENTS ============ */
+const app=$('#app');
+app.addEventListener('click',e=>{
+ const b=e.target.closest('button');if(!b)return;
+ const row=b.closest('.row');
+ if(row&&b.parentElement.classList.contains('seg')){const id=row.dataset.id,v=b.dataset.v;if(S.ans[id]===v)delete S.ans[id];else S.ans[id]=v;paintRow(row);save();updateAll();return}
+ if(row&&b.hasAttribute('data-note')){const t=row.querySelector('textarea');t.hidden=!t.hidden;if(!t.hidden)t.focus();return}
+ if(b.dataset.bulk){const sid=b.dataset.s,m=b.dataset.bulk;FEATS.filter(f=>f.sec===sid).forEach(f=>{if(m==='c')delete S.ans[f.id];else if(m==='d')S.ans[f.id]=f.tag==='v1'?'y':f.tag==='v2'?'l':S.ans[f.id]||undefined;else S.ans[f.id]=m;if(S.ans[f.id]===undefined)delete S.ans[f.id]});document.querySelectorAll(`#sec-${sid} .row`).forEach(paintRow);save();updateAll();return}
+ const cr=b.closest('[data-cid]');
+ if(cr&&b.parentElement.classList.contains('seg')){const id=cr.dataset.cid;if(S.cost[id]===b.dataset.v)delete S.cost[id];else S.cost[id]=b.dataset.v;paintTwo(cr,S.cost[id]);save();updateAll();return}
+ const tr=b.closest('[data-tid]');
+ if(tr&&b.parentElement.classList.contains('seg')){const id=tr.dataset.tid;if(S.term[id]===b.dataset.v)delete S.term[id];else S.term[id]=b.dataset.v;paintTwo(tr,S.term[id]);save();updateAll();return}
+ if(b.dataset.cnote){const t=b.parentElement.querySelector('textarea');t.hidden=!t.hidden;if(!t.hidden)t.focus();return}
+ if(b.dataset.tnote){const t=b.parentElement.querySelector('textarea');t.hidden=!t.hidden;if(!t.hidden)t.focus();return}
+});
+app.addEventListener('input',e=>{
+ const t=e.target;
+ if(t.dataset.nid){const v=t.value;if(v.trim())S.notes[t.dataset.nid]=v;else delete S.notes[t.dataset.nid];paintRow(t.closest('.row'))}
+ else if(t.dataset.snid){if(t.value.trim())S.secnotes[t.dataset.snid]=t.value;else delete S.secnotes[t.dataset.snid]}
+ else if(t.dataset.did){if(t.value.trim())S.disc[t.dataset.did]=t.value;else delete S.disc[t.dataset.did];updateAll()}
+ else if(t.dataset.cnid){if(t.value.trim())S.costnote[t.dataset.cnid]=t.value;else delete S.costnote[t.dataset.cnid]}
+ else if(t.dataset.tnid){if(t.value.trim())S.termnote[t.dataset.tnid]=t.value;else delete S.termnote[t.dataset.tnid]}
+ else return;
+ save();
+});
+$('#q').addEventListener('input',applyFilter);$('#onlyOpen').addEventListener('change',applyFilter);
+function toggleAll(o){document.querySelectorAll('details.sec').forEach(d=>d.open=o)}
+function armed(btn,fn){if(btn.dataset.armed){delete btn.dataset.armed;btn.textContent=btn.dataset.orig;fn();return}btn.dataset.orig=btn.textContent;btn.dataset.armed='1';btn.textContent='Click again to confirm';setTimeout(()=>{if(btn.dataset.armed){delete btn.dataset.armed;btn.textContent=btn.dataset.orig}},4000)}
+function acceptDefaults(){FEATS.forEach(f=>{if(!S.ans[f.id]){if(f.tag==='v1')S.ans[f.id]='y';else if(f.tag==='v2')S.ans[f.id]='l'}});save();restore()}
+function resetAll(){S={ans:{},notes:{},secnotes:{},disc:{},cost:{},costnote:{},term:{},termnote:{}};save();render()}
+function gotoReport(){const d=$('#sec-report');d.open=true;d.scrollIntoView({behavior:'smooth'})}
+
+/* ============ REPORT ============ */
+function buildData(){
+ const feats=FEATURE_SECTIONS.map(sec=>({id:sec.id,part:sec.part,section:sec.title,note:S.secnotes[sec.id]||'',items:sec.feats.map(f=>({id:f.id,name:f.n,suggested:TAGLBL[f.tag],answer:S.ans[f.id]==='y'?'YES':S.ans[f.id]==='l'?'LATER':S.ans[f.id]==='n'?'NO':'UNANSWERED',note:S.notes[f.id]||''}))}));
+ const disc=[];DISCOVERY.forEach(g=>g.q.forEach(q=>disc.push({group:g.g,id:q.id,question:q.l,answer:S.disc[q.id]||''})));
+ const costs=COSTS.map(c=>({id:c.id,item:c.t,type:KIND[c.k],response:S.cost[c.id]==='a'?'UNDERSTOOD':S.cost[c.id]==='d'?'DISCUSS':S.cost[c.id]==='x'?'NOT NEEDED':'UNANSWERED',note:S.costnote[c.id]||''}));
+ const terms=TERMS.map(t=>({id:t.id,term:t.t,response:S.term[t.id]==='a'?'AGREE':S.term[t.id]==='d'?'DISCUSS':'UNANSWERED',note:S.termnote[t.id]||''}));
+ return{form:'Driver & Mobility Platform — Requirements Selection',version:1,generatedAt:new Date().toISOString(),features:feats,discovery:disc,externalCosts:costs,terms}
+}
+function md(d){
+ const L=[];const D=(k)=>{const x=d.discovery.find(q=>q.id===k);return x&&x.answer?x.answer:'—'};
+ L.push('# Client Requirements Report — Driver & Mobility Platform');
+ L.push('Generated: '+new Date(d.generatedAt).toLocaleString());L.push('');
+ L.push('## Client');L.push(`- Company: ${D('biz_name')}`);L.push(`- Contact: ${D('biz_contact')} · ${D('biz_phone')} · ${D('biz_email')}`);L.push(`- City: ${D('city')}`);L.push('');
+ let all=[];d.features.forEach(s=>s.items.forEach(i=>all.push(Object.assign({sec:s.section,part:s.part},i))));
+ const cnt=a=>all.filter(i=>i.answer===a).length;
+ L.push('## Summary');L.push(`- Total features: ${all.length}`);L.push(`- YES (launch): ${cnt('YES')}`);L.push(`- LATER: ${cnt('LATER')}`);L.push(`- NO: ${cnt('NO')}`);L.push(`- UNANSWERED: ${cnt('UNANSWERED')}`);L.push('');
+ L.push('| Section | Yes | Later | No | Open |');L.push('|---|---:|---:|---:|---:|');
+ d.features.forEach(s=>{const c=a=>s.items.filter(i=>i.answer===a).length;L.push(`| ${s.section} | ${c('YES')} | ${c('LATER')} | ${c('NO')} | ${c('UNANSWERED')} |`)});L.push('');
+ L.push('## Feature selections (by section)');
+ d.features.forEach(s=>{L.push('');L.push(`### ${s.section}  _(${s.part})_`);if(s.note)L.push(`> Section note: ${s.note}`);
+  [['YES','Yes — launch'],['LATER','Later'],['NO','No'],['UNANSWERED','Unanswered']].forEach(([a,lbl])=>{const it=s.items.filter(i=>i.answer===a);if(!it.length)return;L.push(`**${lbl}:**`);it.forEach(i=>L.push(`- ${i.name}${i.note?`  — _NOTE: ${i.note.replace(/\n/g,' ')}_`:''}`))})});
+ L.push('');L.push('## Features with client notes');const withN=all.filter(i=>i.note);if(!withN.length)L.push('- (none)');withN.forEach(i=>L.push(`- [${i.answer}] ${i.sec} › ${i.name}: ${i.note.replace(/\n/g,' ')}`));
+ L.push('');L.push('## Business & project answers');let g='';d.discovery.forEach(q=>{if(q.group!==g){g=q.group;L.push('');L.push(`**${g}**`)}L.push(`- ${q.question}: ${q.answer||'—'}`)});
+ L.push('');L.push('## External costs — client response');d.externalCosts.forEach(c=>L.push(`- ${c.item} (${c.type}): **${c.response}**${c.note?` — ${c.note.replace(/\n/g,' ')}`:''}`));
+ L.push('');L.push('## Terms — client response');d.terms.forEach(t=>L.push(`- ${t.term}: **${t.response}**${t.note?` — ${t.note.replace(/\n/g,' ')}`:''}`));
+ L.push('');L.push('## Machine-readable data (for quotation)');L.push('```json');L.push(JSON.stringify(d));L.push('```');
+ return L.join('\n')
+}
+let lastReport='',lastData=null;
+function genReport(){lastData=buildData();lastReport=md(lastData);const b=$('#reportBox');b.value=lastReport;b.focus();b.select();toast('Report generated — copy or download it');}
+function ensure(){if(!lastReport)genReport();else{lastData=buildData();lastReport=md(lastData);$('#reportBox').value=lastReport}}
+async function copyReport(){ensure();try{await navigator.clipboard.writeText(lastReport);toast('Copied to clipboard')}catch(e){const b=$('#reportBox');b.focus();b.select();try{document.execCommand('copy');toast('Copied')}catch(_){toast('Press Ctrl/Cmd + C to copy')}}}
+function dl(kind){ensure();const text=kind==='md'?lastReport:JSON.stringify(lastData,null,1);const name='requirements-report.'+(kind==='md'?'md':'json');triggerDownload(text,name,kind==='md'?'text/markdown':'application/json')}
+function triggerDownload(text,name,type){try{const u=URL.createObjectURL(new Blob([text],{type}));const a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1000);toast('Download started (if blocked, use Copy)')}catch(e){toast('Download blocked — use Copy report')}}
+const OWNER_EMAIL='Info@hyperdynamics.in';
+function emailReport(){ensure();dl('md');const body='Hello,\n\nPlease find my completed requirements report attached (requirements-report.md, just downloaded to my device). Please attach it before sending.\n\nThank you.';setTimeout(()=>{location.href='mailto:'+OWNER_EMAIL+'?subject='+encodeURIComponent('Requirements report - Driver & Mobility Platform')+'&body='+encodeURIComponent(body)},400)}
+function exportProgress(){triggerDownload(JSON.stringify({kind:'progress',S}),'requirements-progress.json','application/json')}
+$('#app').addEventListener('change',e=>{if(e.target.id==='imp'){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const j=JSON.parse(r.result);if(j.S){S=Object.assign({ans:{},notes:{},secnotes:{},disc:{},cost:{},costnote:{},term:{},termnote:{}},j.S);save();render();toast('Progress loaded')}else toast('Not a progress file')}catch(_){toast('Could not read file')}};r.readAsText(f)}});
+
+render();
 </script>
 </body>
 </html>
